@@ -84,7 +84,9 @@ const Home = () => {
                     </section>
                   </section>
             </section> 
-                
+                <section>
+
+             
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable" direction='horizontal'>
                         {(provided, snapshot) => (
@@ -92,7 +94,7 @@ const Home = () => {
                                 ref={provided.innerRef}
                                 style={{ backgroundColor: snapshot.isDraggingOver ? 'green' : 'white' }}
                                 {...provided.droppableProps}
-                                className="imgContainer flex flex-wrap justify-center pt-[6rem]"
+                                className="imgContainer flex flex-wrap justify-center pt-[8rem]"
                             >
                                 {displayedItems.map((image, index) => (
                                     <Draggable draggableId={image.id} key={image.id} index={index}>
@@ -101,7 +103,7 @@ const Home = () => {
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
-                                                className='w-[150px] h-[200px] shadow1 mx-[1rem] my-[1rem] lg:w-[280px] lg:h-[300px] 
+                                                className='w-[120px] h-[150px] shadow1 mx-[1rem] my-[1rem] lg:w-[280px] lg:h-[300px] 
                                                 '
                                             >
                                                 <img src={image.cover} alt=""  className='h-[auto]'/>
@@ -118,6 +120,7 @@ const Home = () => {
                         )}
                     </Droppable>
                 </DragDropContext>
+                   </section>
                 
                 <button className='bg-red-500 py-5 px-5'
                 onClick={() => logout({ returnTo: window.location.origin })}>
