@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Data from "../Data";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-
+import { signOut } from 'firebase/auth';
+import { toast } from 'react-toastify';
+import auth from './firebaseAuth';
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -20,15 +22,7 @@ const Home = () => {
 
 
 
-    const [loading, setLoading] = useState(true);  // State for loading
-
-    // Run once when the component mounts
-   
-
-
-
-   
-
+    const [loading, setLoading] = useState(true); 
     const [search, setSearch] = useState("");
     const [allItems, setAllItems] = useState(Data);  // Original data
     const [displayedItems, setDisplayedItems] = useState(Data);  // Displayed/filtered data
@@ -56,6 +50,18 @@ const Home = () => {
         return () => clearTimeout(timer);  // Clear timer on unmount
     }, []);
 
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            console.log('Logged out successfully');
+            toast.success('Logged out successfully');
+        } catch (error) {
+            console.error("Error during logout:", error.message);
+            toast.success('User registered successfully!');
+        }
+    };
+
     // If loading, show loader
     if (loading) {
         return <div className="loader"></div>;
@@ -65,7 +71,7 @@ const Home = () => {
         <>
             <main>
                     <section className='bg-slate-700 py-[2rem] px-[2rem]  header  fixed w-[100%] top-0 ' >
-                  <section className='flex justify-around'>
+                  <section className='flex justify-around space-x-8'>
                     <div className="logo hidden">
                         <h1 className='text-[25px] text-slate-100 capitalize '>Logo</h1>
                     </div>
@@ -77,6 +83,8 @@ const Home = () => {
                      sm:text-sm" placeholder="Search for anything..." type="search" name="search"/>
 
                     </section>
+                    <button className='bg-blue-500 py-2 px-8 rounded-lg text-white'
+                onClick={handleLogout}>Logout</button>
                     <section className='flex  space-x-8 hidden'>
                         <a href="#" className="links block text-[20px] text-slate-100 capitalize ">home</a>
                         <a href="#" className="links block text-[20px] text-slate-100 capitalize ">account</a>
@@ -92,7 +100,7 @@ const Home = () => {
                                 ref={provided.innerRef}
                                 style={{ backgroundColor: snapshot.isDraggingOver ? 'green' : 'white' }}
                                 {...provided.droppableProps}
-                                className="imgContainer flex flex-wrap justify-center pt-[6rem]"
+                                className="imgContainer flex flex-wrap justify-center pt-[8rem]"
                             >
                                 {displayedItems.map((image, index) => (
                                     <Draggable draggableId={image.id} key={image.id} index={index}>
@@ -101,12 +109,12 @@ const Home = () => {
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
-                                                className='w-[150px] h-[200px] shadow1 mx-[1rem] my-[1rem] lg:w-[280px] lg:h-[300px] 
+                                                className='w-[130px] h-[180px] shadow1 mx-[1rem] my-[1rem] lg:w-[280px] lg:h-[300px] 
                                                 '
                                             >
                                                 <img src={image.cover} alt=""  className='h-[auto]'/>
-                                                <figcaption>
-                                                    <h3>{image.name}</h3>
+                                                <figcaption className='px-4'>
+                                                    <h3 className='text-[14px] text-center'>{image.name}</h3>
                                                     {/* <h3>{image.Tag}</h3> */}
                                                 </figcaption>
                                             </div>
@@ -119,10 +127,8 @@ const Home = () => {
                     </Droppable>
                 </DragDropContext>
                 
-                <button className='bg-red-500 py-5 px-5'
-                onClick={() => logout({ returnTo: window.location.origin })}>
-                    Log Out
-                </button>
+               
+             
             </main> 
         </>
     );

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import auth from './Component/firebaseAuth';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import Home from './Component/Home';
 import Log from './Component/Log';
 import SignUP from './Component/SignUP';
 import { ToastContainer } from 'react-toastify';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,33 +19,20 @@ function App() {
 
         return () => unsubscribe();
     }, []);
-    const handleLogout = async () => {
-      try {
-          await signOut(auth);
-          console.log('Logged out successfully');
-          toast.success('Logged out successfully');
-      } catch (error) {
-          console.error("Error during logout:", error.message);
-          toast.success('User registered successfully!');
-      }
-  };
+ 
     return (
-        <div>
-            
-         <ToastContainer />
+        <Router>
+            <ToastContainer />
             {isAuthenticated ? (
-              <div>
-                <Home />
-                <button onClick={handleLogout}>Logout</button>
-              </div>
+              <Home />
             ) : (
-                <div>
-                    <Log />
-                 
-                </div>
+                <Routes>
+                    <Route path="/login" element={<Log />} />
+                    <Route path="/signup" element={<SignUP />} />
+                    <Route path="*" element={<Navigate to="/login" />} /> {/* This will handle unmatched routes */}
+                </Routes>
             )}
-
-        </div>
+        </Router>
     );
 }
 

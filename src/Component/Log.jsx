@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import auth from './firebaseAuth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const Log = () => {
     const [email, setEmail] = useState('');
@@ -69,7 +70,9 @@ const Log = () => {
                                 className=' borderb  bg-transparent'
                             />
                         </div>
-                        <button type="submit" className='block py-4 px-2 bg-blue-500 w-full text-white font-semibold'>Login</button>
+                        <button type="submit" className='block py-4 px-2 bg-blue-500 w-full text-white
+                         font-semibold'>Login</button>
+                         <h2>Dont have an account <Link to={"/signup"}> <span className='text-red-500 font-bold'>Signup here</span></Link></h2>
                     </section>
                 </form>
             </main>
