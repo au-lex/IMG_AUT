@@ -3,7 +3,7 @@ import React from 'react'
 const Btn = () => {
     return (
         <div>
-            <button>logout</button>
+            <button>logout here</button>
         </div>
     )
 }
