@@ -70,15 +70,7 @@ const Data = [
       
     
        
-          
-          {
-            amount: 1,
-            id: "8",
-            Tag: "HTag",
-            name: "Wavy Teture Skirt",
-            desc: "You'll feel just as good as you look putting on this skirt! Wavy texture pattern makes this skirt the perfect addition ",
-            cover: "https://res.cloudinary.com/durbee4ln/image/upload/v1682626759/eccomerce%20website%20using%20reactjs/clothes-4_ym8gny.jpg",
-          },
+,
          
    
       
